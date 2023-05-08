@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		".env": "plaintext",
+		"lem-ipc.h": "c"
+	}
+}
