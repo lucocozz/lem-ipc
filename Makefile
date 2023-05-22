@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
+#    By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/05/06 17:20:11 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/05/22 17:10:04 by lcocozza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lemipc
 
-SRCS =	main.c
+SRCS =	main.c divide_rectangle_equal_area.c free_polygons.c
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 DEPENDENCIES = $(OBJS:%.o=%.d)
@@ -25,17 +25,17 @@ INCLUDES_DIR = includes $(LIBS:%=lib%/includes) $(LIBS:%=lib%)
 LIBS =
 
 MAKE = make
-CC = clang
+CC = gcc
 RM = rm -f
 MKDIR = mkdir -p
 DEBUG = off
 
-CFLAGS = -MMD -Wall -Wextra -Werror
+CFLAGS = -lm -MMD -Wall -Wextra -Werror
 CXXFLAGS = $(INCLUDES_DIR:%=-I %)
 ifeq ($(DEBUG), on)
 	CXXFLAGS += -g3
 endif
-LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%)
+LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%) -lm
 
 vpath %.c	$(addprefix $(SRCS_DIR), /.)
 
