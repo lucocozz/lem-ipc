@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:47:56 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/05/23 15:48:27 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:33:05 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static t_polygon	*__append_polygon(t_polygon *polygons, t_point *vertices,
 	return (polygons);
 }
 
-static float	__calculate_area(t_point *vertices, int len)
+static float	__calculate_area(t_point *vertices, int len, int n)
 {
 	float	area = 0.0;
 
-	for (int i = 0; i < len; ++i) {
+	for (int i = 0; i < n; ++i) {
 		t_point	point_a = vertices[i];
 		t_point point_b = vertices[(i + 1) % len];
 		area += point_a.x * point_b.y - point_a.y * point_b.x;
@@ -66,7 +66,7 @@ static void	__reduce_area_to(t_point *vertices, int len, float target_area)
 	t_point	previous_vertex = vertices[len - 2];
 	t_point	*current_vertex = &(vertices[len - 1]);
 
-	float	current_area = 2 * __calculate_area(vertices, len - 2);
+	float	current_area = 2 * __calculate_area(vertices, len, len - 2);
 	target_area *= 2;
 
 	if (previous_vertex.x == current_vertex->x) {
@@ -88,7 +88,7 @@ int divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n)
 		return (1);
 	}
 
-	float	total_area = __calculate_area(rectangle, 4);
+	float	total_area = __calculate_area(rectangle, 4, 4);
 	float	target_area_polygon = total_area / n;
 
 	t_point	center_point = {width / 2, height / 2};
@@ -107,11 +107,11 @@ int divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n)
 		{
 			next_vertex_index = (next_vertex_index + 1) % 4;
 			current_polygon = __append_vertex(current_polygon, len++, rectangle[next_vertex_index]);
-			current_area_polygon = __calculate_area(current_polygon, len);
+			current_area_polygon = __calculate_area(current_polygon, len, len);
 		}
 		if (__isclose(current_area_polygon, target_area_polygon, DFT_REL_TOL, DFT_ABS_TOL) == false) {
 			__reduce_area_to(current_polygon, len, target_area_polygon);
-			current_area_polygon = __calculate_area(current_polygon, len);
+			current_area_polygon = __calculate_area(current_polygon, len, len);
 			next_vertex_index = (4 + next_vertex_index - 1) % 4;
 		}
 		*areas = __append_polygon(*areas, current_polygon, areas_len, len);
