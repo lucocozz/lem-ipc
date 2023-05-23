@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:47:56 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/05/23 14:45:49 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:48:27 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n)
 	t_point	first_point = {width / 2, 0};
 
 	int	areas_len;
-	int next_vertex_index;
+	int next_vertex_index = 0;
 	for (areas_len = 0; areas_len < n; ++areas_len)
 	{
 		int		len = 0;
