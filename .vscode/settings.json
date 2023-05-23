@@ -4,6 +4,7 @@
 		"lem-ipc.h": "c",
 		"stdio.h": "c",
 		"string.h": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"math.h": "c"
 	}
 }

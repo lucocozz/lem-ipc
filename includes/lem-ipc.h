@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/05/22 17:21:37 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:23:58 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_polygon {
 
 int 	divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n);
 void	free_polygons(t_polygon *polygons, int len);
+int		area_id_is(t_polygon *areas, int len, t_point point);
 
 
 #endif

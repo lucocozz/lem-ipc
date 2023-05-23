@@ -6,13 +6,13 @@
 #    By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/05/22 17:10:04 by lcocozza         ###   ########.fr        #
+#    Updated: 2023/05/23 14:51:38 by lcocozza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lemipc
 
-SRCS =	main.c divide_rectangle_equal_area.c free_polygons.c
+SRCS =	main.c divide_rectangle_equal_area.c free_polygons.c area_id_is.c
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 DEPENDENCIES = $(OBJS:%.o=%.d)

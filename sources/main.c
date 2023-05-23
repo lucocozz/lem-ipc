@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/05/22 17:37:43 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:06:56 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,23 @@ int	main()
 	printf("╰────────╯\n");
 
 	t_polygon	*areas = NULL;
-	int areas_len = divide_rectangle_equal_area(&areas, 11, 11, 2);
+	int areas_len = divide_rectangle_equal_area(&areas, 10, 10, 3);
 	printf("%d\n", areas_len);
+
+	for (int i = 0; i < areas_len; ++i) {
+		printf("polygon %d:\n\t", i);
+		for (int j = 0; j < areas[i].len; ++j)
+			printf("Point(%.0f, %.0f) ", areas[i].vertices[j].x, areas[i].vertices[j].y);
+		printf("\n");
+	}
+
+	printf("\n");
+	for (int y = 0; y < 10; ++y) {
+		for (int x = 0; x < 10; ++x)
+			printf(" %d", area_id_is(areas, areas_len, (t_point){x, y}));
+		printf("\n");
+	}
+
 	free_polygons(areas, areas_len);
 	return (EXIT_SUCCESS);
 }

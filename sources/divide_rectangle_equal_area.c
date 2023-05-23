@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:47:56 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/05/22 17:33:16 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:45:49 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static bool	__isclose(double a, double b, double relative_tolerance, double abso
 	return (diff <= tolerance);
 }
 
-static void	__adjust_to_area(t_point *vertices, int len, float target_area)
+static void	__reduce_area_to(t_point *vertices, int len, float target_area)
 {
 	t_point	center = vertices[0];
 	t_point	previous_vertex = vertices[len - 2];
@@ -71,7 +71,7 @@ static void	__adjust_to_area(t_point *vertices, int len, float target_area)
 
 	if (previous_vertex.x == current_vertex->x) {
 		current_vertex->y = (target_area - current_area - current_vertex->x *
-			(center.y - previous_vertex.y)) / (previous_vertex.x - center.y);
+			(center.y - previous_vertex.y)) / (previous_vertex.x - center.x);
 	}
 	else {
 		current_vertex->x = (target_area - current_area - current_vertex->y *
@@ -81,7 +81,6 @@ static void	__adjust_to_area(t_point *vertices, int len, float target_area)
 
 int divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n)
 {
-	int			areas_len = 0;
 	t_point 	*rectangle = __create_polygon_rectangle(width, height);
 
 	if (n == 1) {
@@ -94,34 +93,28 @@ int divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n)
 
 	t_point	center_point = {width / 2, height / 2};
 	t_point	first_point = {width / 2, 0};
-	int		next_vertex_index = 1;
 
-	for (int i = 0; i < n; ++i)
+	int	areas_len;
+	int next_vertex_index;
+	for (areas_len = 0; areas_len < n; ++areas_len)
 	{
 		int		len = 0;
 		t_point	*current_polygon = __append_vertex(NULL, len++, center_point);
 		current_polygon = __append_vertex(current_polygon, len++, first_point);
-		float	current_area_polygon = 0.0;
 
+		float	current_area_polygon = 0.0;
 		while (current_area_polygon < target_area_polygon)
 		{
+			next_vertex_index = (next_vertex_index + 1) % 4;
 			current_polygon = __append_vertex(current_polygon, len++, rectangle[next_vertex_index]);
 			current_area_polygon = __calculate_area(current_polygon, len);
-			if (current_area_polygon <= target_area_polygon)
-				next_vertex_index = (next_vertex_index + 1) % 4;
 		}
 		if (__isclose(current_area_polygon, target_area_polygon, DFT_REL_TOL, DFT_ABS_TOL) == false) {
-			__adjust_to_area(current_polygon, len, target_area_polygon);
+			__reduce_area_to(current_polygon, len, target_area_polygon);
 			current_area_polygon = __calculate_area(current_polygon, len);
-		}
-		if (__isclose(current_area_polygon, target_area_polygon, DFT_REL_TOL, DFT_ABS_TOL) == false) {
-			free(rectangle);
-			free(current_polygon);
-			free_polygons(*areas, areas_len);
-			return (-1);
+			next_vertex_index = (4 + next_vertex_index - 1) % 4;
 		}
 		*areas = __append_polygon(*areas, current_polygon, areas_len, len);
-		areas_len++;
 		first_point = current_polygon[len - 1];
 	}
 	free(rectangle);
