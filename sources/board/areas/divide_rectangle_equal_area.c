@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:47:56 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/05/23 16:33:05 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:07:34 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,42 @@ static bool	__isclose(double a, double b, double relative_tolerance, double abso
 	return (diff <= tolerance);
 }
 
+// static t_point	__lerp(t_point p1, t_point p2, float t)
+// {
+// 	t_point	interpolated_point;
+
+// 	interpolated_point.x = p1.x + t * (p2.x - p1.x);
+// 	interpolated_point.y = p1.y + t * (p2.y - p1.y);
+    
+// 	return (interpolated_point);
+// }
+
 static void	__reduce_area_to(t_point *vertices, int len, float target_area)
 {
-	t_point	center = vertices[0];
-	t_point	previous_vertex = vertices[len - 2];
-	t_point	*current_vertex = &(vertices[len - 1]);
+    // float current_area = __calculate_area(vertices, len, len);
 
-	float	current_area = 2 * __calculate_area(vertices, len, len - 2);
-	target_area *= 2;
+    // t_point previous_vertex = vertices[len - 2];
+    // t_point *current_vertex = &(vertices[len - 1]);
 
-	if (previous_vertex.x == current_vertex->x) {
-		current_vertex->y = (target_area - current_area - current_vertex->x *
-			(center.y - previous_vertex.y)) / (previous_vertex.x - center.x);
-	}
-	else {
-		current_vertex->x = (target_area - current_area - current_vertex->y *
-			(previous_vertex.x - center.x)) / (center.y - previous_vertex.y);
-	}
+    // float t = 1.0 - target_area / current_area;
+
+    // *current_vertex = __lerp(previous_vertex, *current_vertex, t);
+
+	float current_area = __calculate_area(vertices, len, len);
+
+    t_point previous_vertex = vertices[len - 2];
+
+    while (current_area > target_area)
+    {
+    	t_point* current_vertex = &vertices[len - 1];
+        t_point new_vertex;
+
+        new_vertex.x = (current_vertex->x + previous_vertex.x) / 2.0;
+        new_vertex.y = (current_vertex->y + previous_vertex.y) / 2.0;
+
+        vertices[len - 1] = new_vertex;
+        current_area = __calculate_area(vertices, len, len);
+    }
 }
 
 int divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n)
