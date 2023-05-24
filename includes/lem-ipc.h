@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/05/23 15:23:58 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/24 10:55:53 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define DFT_REL_TOL 1e-9
 # define DFT_ABS_TOL 0
 
-# define BOARD_WIDTH 10
-# define BOARD_HEIGHT 10
+# define BOARD_WIDTH 30
+# define BOARD_HEIGHT 15
 # define TEAM_SIZE 4
 # define TEAMS_LEN LEN(TEAMS)
 # define TEAMS (t_team[]){			\
@@ -53,6 +53,8 @@ typedef struct s_polygon {
 }	t_polygon;
 
 
+
+/*  BOARD  */
 int 	divide_rectangle_equal_area(t_polygon **areas, int width, int height, int n);
 void	free_polygons(t_polygon *polygons, int len);
 int		area_id_is(t_polygon *areas, int len, t_point point);
