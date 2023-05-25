@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   halton_sequence.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/05/25 15:00:37 by lcocozza         ###   ########.fr       */
+/*   Created: 2023/05/25 11:48:33 by lcocozza          #+#    #+#             */
+/*   Updated: 2023/05/25 13:47:14 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
-int	main()
+double  halton_sequence(int index, int base)
 {
-	if (TEAMS_LEN < 2) {
-		fprintf(stderr, "Error: minimum of 2 teams is required\n");
-		return (EXIT_ERROR);
-	}
+    double	result = 0;
+    double	f = 1.0 / (double)base;
+    int		i = index;
 
-	t_polygon *areas = NULL;
-	int areas_len = divide_board_equal_area(&areas, BOARD_WIDTH, BOARD_HEIGHT, TEAMS_LEN);
-	t_player *players = spread_players(areas, areas_len);
+    while(i > 0)
+	{
+        result = result + f * (double)(i % base);
+        i = i / base;
+        f = f / (double)base;
+    }
 
-	print_board(players);
-
-	free(players);
-	free_polygons(areas, areas_len);
-	return (EXIT_SUCCESS);
+    return (result);
 }

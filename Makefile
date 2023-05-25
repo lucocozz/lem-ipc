@@ -6,18 +6,24 @@
 #    By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/05/24 10:54:38 by lcocozza         ###   ########.fr        #
+#    Updated: 2023/05/25 14:59:14 by lcocozza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lemipc
 
-SRCS =	main.c	\
-		$(_BOARD)
+SRCS =	main.c		\
+		$(_BOARD)	\
+		$(_UTILS)
 
-_BOARD =	divide_rectangle_equal_area.c	\
-		free_polygons.c					\
-		area_id_is.c					\
+_BOARD =	divide_board_equal_area.c	\
+			free_polygons.c				\
+			area_id_is.c				\
+			halton_sequence.c			\
+			spread_players.c			\
+			print_board.c				\
+
+_UTILS =	math_utils.c
 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
@@ -44,7 +50,7 @@ endif
 LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%) -lm
 
 vpath %.c	$(addprefix $(SRCS_DIR), /.				\
-				$(addprefix /board, /. /areas))
+				$(addprefix /board, /. /areas) /utils)
 
 all:
 	$(foreach LIB, ${LIBS}, ${MAKE} -C lib${LIB} ;)
