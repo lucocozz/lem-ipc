@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_board.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:59:48 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/05/25 15:50:54 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/27 20:44:01 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	print_board(t_player *players)
 			if (is_here == -1)
 				printf("  ");
 			else {
+				// TODO: death icon
 				printf("%s", players[is_here].team.icon);
 			}
 		}

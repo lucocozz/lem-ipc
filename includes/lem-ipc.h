@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem-ipc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/05/25 15:55:01 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/05/27 20:33:08 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@
 # define BORDER_BOTTOM_RIGHT "╯"
 
 # define BOARD_WIDTH 30
-# define BOARD_HEIGHT 15
+# define BOARD_HEIGHT 30
 # define PLAYERS_NUM (int)(TEAM_SIZE * TEAMS_LEN)
-# define TEAM_SIZE 4
+# define TEAM_SIZE 10
 # define TEAMS_LEN LEN(TEAMS)
 # define TEAMS (t_team[]){			\
 	{.value = 1, .icon = "🤠"}, 	\
 	{.value = 2, .icon = "🥸"},		\
-	{.value = 3, .icon = "🤓"}		\
+	{.value = 3, .icon = "🤓"},		\
+	{.value = 4, .icon = "🧐"}		\
 }
 # define DEATH_ICON "💀"
 
