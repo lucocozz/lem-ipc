@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/05/27 20:33:08 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:21:37 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <sys/types.h>
 # include <stdbool.h>
+# include <time.h>
 
 # define EXIT_ERROR 2
 # define DFT_REL_TOL 1e-9
@@ -36,7 +37,7 @@
 # define BOARD_WIDTH 30
 # define BOARD_HEIGHT 30
 # define PLAYERS_NUM (int)(TEAM_SIZE * TEAMS_LEN)
-# define TEAM_SIZE 10
+# define TEAM_SIZE 4
 # define TEAMS_LEN LEN(TEAMS)
 # define TEAMS (t_team[]){			\
 	{.value = 1, .icon = "🤠"}, 	\

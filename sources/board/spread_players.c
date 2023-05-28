@@ -41,6 +41,12 @@ static bool	__add_in_team(t_player *players, t_point point, t_polygon *areas, in
 	return (false);
 }
 
+static int	__init_sequence(int range)
+{
+	srand(time(NULL));
+	return (rand() % range);
+}
+
 t_player	*spread_players(t_polygon *areas, int areas_len)
 {
 	t_player	*players;
@@ -50,7 +56,7 @@ t_player	*spread_players(t_polygon *areas, int areas_len)
 	if (players == NULL)
 		return (NULL);
 
-	for (int i = 1; is_full == false; ++i)
+	for (int i = __init_sequence(100); is_full == false; ++i)
 	{
 		t_point	point;
 

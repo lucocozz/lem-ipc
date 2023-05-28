@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:59:48 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/05/27 20:44:01 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:16:59 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ void	print_board(t_player *players)
 
 			if (is_here == -1)
 				printf("  ");
-			else {
-				// TODO: death icon
+			else if (players[is_here].status == Alive)
 				printf("%s", players[is_here].team.icon);
+			else {
+				//TODO: remove dead player
+				printf("%s", DEATH_ICON);
 			}
 		}
 		printf("%s\n", BORDER_COLUMN);
