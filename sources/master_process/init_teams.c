@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math_utils.c                                       :+:      :+:    :+:   */
+/*   init_teams.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 11:57:04 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/13 14:44:16 by lcocozza         ###   ########.fr       */
+/*   Created: 2023/07/13 14:51:51 by lcocozza          #+#    #+#             */
+/*   Updated: 2023/07/13 16:54:38 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
-bool	isnear(double a, double b, double relative_tolerance, double absolute_tolerance)
+t_team	*init_teams(int teams_len)
 {
-	double diff = fabs(a - b);
-	double tolerance = fmax(relative_tolerance * fmax(fabs(a), fabs(b)), absolute_tolerance);
+	t_team	*teams;
+	int		emoji_seed = rand_range(0, EMOJIS_LEN);
 
-	return (diff <= tolerance);
-}
-
-int	rand_range(int min, int max)
-{
-	srand(time(NULL));
-	return (rand() % (max - min + 1) + min);
+	teams = malloc(sizeof(t_team) * teams_len);
+	if (teams == NULL)
+		return (NULL);
+	for (int i = 0; i < teams_len; ++i)
+	{
+		teams[i].id = i;
+		strcpy(teams[i].icon, EMOJIS[(emoji_seed + i) % EMOJIS_LEN]);
+	}
+	return (teams);
 }

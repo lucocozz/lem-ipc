@@ -12,59 +12,53 @@
 
 #include "lem-ipc.h"
 
-static bool	__check_is_full(int teams[])
+static bool	__check_is_full(t_game *game, int teams[])
 {
-	for (int i = 0; i < (int)TEAMS_LEN; ++i) {
-		if (teams[i] < TEAM_SIZE)
+	for (int i = 0; i < game->config.teams; ++i) {
+		if (teams[i] < game->config.players / game->config.teams)
 			return (false);
 	}
 	return (true);
 }
 
-static bool	__add_in_team(t_player *players, t_point point, t_polygon *areas, int areas_len)
+static bool	__add_in_team(t_game *game, t_player *players, t_point point)
 {
 	static int	index = 0;
-	static int	teams[TEAMS_LEN] = {0};
-	int			area_id = area_id_is(areas, areas_len, point);
+	static int	teams[MAX_TEAMS] = {0};
+	int			area_id = area_id_is(game->board.areas, game->board.areas_len, point);
 
-	if (teams[area_id] < TEAM_SIZE)
+	if (teams[area_id] < game->config.players / game->config.teams)
 	{
 		players[index].position = point;
-		players[index].team = TEAMS[area_id];
+		players[index].team = game->teams[area_id];
 		players[index].status = Alive;
 		
 		teams[area_id]++;
 		index++;
 
-		return (__check_is_full(teams));
+		return (__check_is_full(game, teams));
 	}
 	return (false);
 }
 
-static int	__init_sequence(int range)
-{
-	srand(time(NULL));
-	return (rand() % range);
-}
-
-t_player	*spread_players(t_polygon *areas, int areas_len)
+t_player	*spread_players(t_game *game)
 {
 	t_player	*players;
 	bool		is_full = false;
 
-	players = malloc(sizeof(t_player) * PLAYERS_NUM);
+	players = malloc(sizeof(t_player) * game->config.players);
 	if (players == NULL)
 		return (NULL);
 
-	for (int i = __init_sequence(100); is_full == false; ++i)
+	for (int i = rand_range(0, 100); is_full == false; ++i)
 	{
 		t_point	point;
 
-        point.x = BOARD_WIDTH * halton_sequence(i, 2);
-        point.y = BOARD_HEIGHT * halton_sequence(i, 3);
+        point.x = game->board.width * halton_sequence(i, 2);
+        point.y = game->board.height * halton_sequence(i, 3);
 
-		if (point.x < BOARD_WIDTH && point.y < BOARD_HEIGHT)
-			is_full = __add_in_team(players, point, areas, areas_len);
+		if (point.x < game->board.width && point.y < game->board.height)
+			is_full = __add_in_team(game, players, point);
     }
 
 	return (players);

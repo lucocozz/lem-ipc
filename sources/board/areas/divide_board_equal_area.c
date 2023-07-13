@@ -101,7 +101,7 @@ int divide_board_equal_area(t_polygon **areas, int width, int height, int n)
 			current_polygon = __append_vertex(current_polygon, len++, rectangle[next_vertex_index]);
 			current_area_polygon = __calculate_area(current_polygon, len, len);
 		}
-		if (isclose(current_area_polygon, target_area_polygon, DFT_REL_TOL, DFT_ABS_TOL) == false) {
+		if (isnear(current_area_polygon, target_area_polygon, DFT_REL_TOL, DFT_ABS_TOL) == false) {
 			__reduce_area_to(current_polygon, len, target_area_polygon);
 			current_area_polygon = __calculate_area(current_polygon, len, len);
 			next_vertex_index = (4 + next_vertex_index - 1) % 4;

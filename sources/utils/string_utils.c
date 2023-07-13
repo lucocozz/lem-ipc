@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math_utils.c                                       :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 11:57:04 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/13 14:44:16 by lcocozza         ###   ########.fr       */
+/*   Created: 2023/07/12 10:31:13 by lcocozza          #+#    #+#             */
+/*   Updated: 2023/07/12 10:33:05 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-ipc.h"
+#define __USE_MISC
 
-bool	isnear(double a, double b, double relative_tolerance, double absolute_tolerance)
+#include <sys/types.h>
+#include <stdbool.h>
+
+bool	start_with(const char *start_with, const char *str)
 {
-	double diff = fabs(a - b);
-	double tolerance = fmax(relative_tolerance * fmax(fabs(a), fabs(b)), absolute_tolerance);
+	uint	i = 0;
 
-	return (diff <= tolerance);
-}
-
-int	rand_range(int min, int max)
-{
-	srand(time(NULL));
-	return (rand() % (max - min + 1) + min);
+	while (start_with[i] != '\0' && str[i] != '\0') {
+		if (start_with[i] != str[i])
+			return (false);
+		++i;
+	}
+	return (start_with[i] == '\0' ? true : false);
 }

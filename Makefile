@@ -6,15 +6,20 @@
 #    By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/05/25 14:59:14 by lcocozza         ###   ########.fr        #
+#    Updated: 2023/07/13 16:04:43 by lcocozza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lemipc
 
 SRCS =	main.c		\
+		$(_PARSER)	\
+		$(_UTILS)	\
+		$(_MASTER)	\
+		$(_SUB)		\
 		$(_BOARD)	\
-		$(_UTILS)
+
+_PARSER =	parse_config.c
 
 _BOARD =	divide_board_equal_area.c	\
 			free_polygons.c				\
@@ -23,7 +28,13 @@ _BOARD =	divide_board_equal_area.c	\
 			spread_players.c			\
 			print_board.c				\
 
-_UTILS =	math_utils.c
+_UTILS =	math_utils.c				\
+			string_utils.c
+
+_MASTER =	master_process.c			\
+			init_teams.c
+
+_SUB =		sub_process.c
 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
@@ -50,7 +61,7 @@ endif
 LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%) -lm
 
 vpath %.c	$(addprefix $(SRCS_DIR), /.				\
-				$(addprefix /board, /. /areas) /utils)
+				$(addprefix /board, /. /areas) /utils /parser /master_process /sub_process)
 
 all:
 	$(foreach LIB, ${LIBS}, ${MAKE} -C lib${LIB} ;)
