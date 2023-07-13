@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:34:14 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/13 14:20:51 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/07/13 17:23:58 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_config	__parse_master(int argc, char **argv, int shm_id)
 	}
 
 	if (config.teams < 2 || config.teams > MAX_TEAMS)
-		__parsing_error("Error: --teams must be >= 2 and <= 10\n", shm_id);
+		__parsing_error("Error: --teams must be >= 2 and <= 20\n", shm_id);
 	if (config.players < 2)
 		__parsing_error("Error: --players must be >= 2\n", shm_id);
 	if (config.board_height < 5)
