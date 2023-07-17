@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:40:02 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/13 16:19:51 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:16:50 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	master_process(t_config config, t_game *game)
 	game->players = spread_players(game);
 	if (game->players == NULL)
 		return (EXIT_ERROR);
-	print_board(game);
+	sem_unlink(SEM_NAME);
+	waiting_players(game);
 	return (EXIT_SUCCESS);
 }

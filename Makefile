@@ -6,7 +6,7 @@
 #    By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/07/13 16:04:43 by lcocozza         ###   ########.fr        #
+#    Updated: 2023/07/17 17:53:52 by lcocozza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,12 @@ _BOARD =	divide_board_equal_area.c	\
 			print_board.c				\
 
 _UTILS =	math_utils.c				\
-			string_utils.c
+			string_utils.c				\
+			memory_utils.c
 
 _MASTER =	master_process.c			\
-			init_teams.c
+			init_teams.c				\
+			waiting_players.c
 
 _SUB =		sub_process.c
 
@@ -58,7 +60,7 @@ CXXFLAGS = $(INCLUDES_DIR:%=-I %)
 ifeq ($(DEBUG), on)
 	CXXFLAGS += -g3
 endif
-LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%) -lm
+LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%) -lm -lpthread
 
 vpath %.c	$(addprefix $(SRCS_DIR), /.				\
 				$(addprefix /board, /. /areas) /utils /parser /master_process /sub_process)

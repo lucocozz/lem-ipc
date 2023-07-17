@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/07/13 17:23:14 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:55:04 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@
 # include <sys/shm.h>
 # include <sys/sem.h>
 # include <errno.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <semaphore.h>
 
 # define SHM_KEY 422442
+# define SEM_NAME "/lem-ipc"
 # define SHM_SIZE sizeof(t_game)
 # define PERMS 0600
 # define MAX_TEAMS 20
@@ -69,7 +73,7 @@
 	"😉", "😌", "😍", "🥰", "😘", "😚", "😋", "👿", "😝", "😜", "🤪", "🤨", \
 	"🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "😒", "😞", "🙁", "😣", "😖", \
 	"😩", "🥺", "😢", "😭", "😤", "😠", "😡", "😶", "🤯", "😳", "🥵", "😾", \
-	"🥶", "😱", "😨", "😰", "😥", "😓", "🫣", "🤗", "🫡", "😽", "🫢", "🤭", \
+	"🥶", "😱", "🤭", "😰", "😥", "😓", "🫣", "🤗", "🫡", "😽", "🫢", "😨", \
 	"🤫", "🤥", "🤬", "😐", "😬", "🫠", "🙄", "😯", "😦", "🥱", "😴", "🤤", \
 	"😪", "😵", "🫥", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "😿", \
 	"🤑", "🤠", "😈", "😛", "👹", "👺", "🤡", "💩", "👻", "👽", "👾", "🤖", \
@@ -115,6 +119,7 @@ typedef struct s_player {
 	t_point			position;
 	t_team			team;
 	t_player_status	status;
+	pid_t			pid;
 }	t_player;
 
 typedef struct s_config {
@@ -125,7 +130,7 @@ typedef struct s_config {
 	bool	all;
 	bool	deamon;
 	t_ptype	process_type;
-	int		shm_id;
+	key_t	shm_id;
 } t_config;
 
 typedef struct s_game {
@@ -162,6 +167,7 @@ void		print_board(t_game *game);
 bool	isnear(double a, double b, double relative_tolerance, double absolute_tolerance);
 bool	start_with(const char *start_with, const char *str);
 int		rand_range(int min, int max);
+void	*quick_shm_alloc(size_t size, key_t key);
 
 
 /*  PARSER  */
@@ -171,6 +177,7 @@ t_config	parse_config(int argc, char **argv);
 /* MASTER PROCESS */
 int		master_process(t_config config, t_game *game);
 t_team	*init_teams(int teams_len);
+void	waiting_players(t_game *game);
 
 
 /* SUB PROCESS */

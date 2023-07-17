@@ -31,7 +31,7 @@ static bool	__add_in_team(t_game *game, t_player *players, t_point point)
 	{
 		players[index].position = point;
 		players[index].team = game->teams[area_id];
-		players[index].status = Alive;
+		players[index].status = Waiting;
 		
 		teams[area_id]++;
 		index++;
@@ -43,12 +43,8 @@ static bool	__add_in_team(t_game *game, t_player *players, t_point point)
 
 t_player	*spread_players(t_game *game)
 {
-	t_player	*players;
 	bool		is_full = false;
-
-	players = malloc(sizeof(t_player) * game->config.players);
-	if (players == NULL)
-		return (NULL);
+	t_player	*players = quick_shm_alloc(sizeof(t_player) * game->config.players, SHM_KEY + 1);
 
 	for (int i = rand_range(0, 100); is_full == false; ++i)
 	{

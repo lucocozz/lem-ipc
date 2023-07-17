@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/07/17 16:36:33 by lcocozza         ###   ########.fr       */
+/*   Created: 2023/07/17 17:45:12 by lcocozza          #+#    #+#             */
+/*   Updated: 2023/07/17 17:55:55 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
-int	main(int argc, char **argv)
+void	*quick_shm_alloc(size_t size, key_t key)
 {
-	t_config	config = parse_config(argc, argv);
-	t_game		*game = shmat(config.shm_id, NULL, 0);
+	int		shm_id;
+	void	*shm;
 
-	if (config.process_type == Master)
-		master_process(config, game);
-	else
-		sub_process(config, game);
-
-	// free(players);
-	// free_polygons(areas, areas_len);
+	shm_id = shmget(key, size, IPC_CREAT | 0666);
+	if (shm_id == -1)
+		return (NULL);
+	shm = shmat(shm_id, NULL, 0);
+	if (shm == (void *)-1)
+		return (NULL);
 	// shmctl(shm_id, IPC_RMID, NULL);
-	return (EXIT_SUCCESS);
+	return (shm);
 }
