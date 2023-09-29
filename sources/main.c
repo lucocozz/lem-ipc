@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/07/17 16:36:33 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/07/31 18:55:16 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int	main(int argc, char **argv)
 {
-	t_config	config = parse_config(argc, argv);
-	t_game		*game = shmat(config.shm_id, NULL, 0);
+	t_process	process = init_process(argc, argv);
 
-	if (config.process_type == Master)
-		master_process(config, game);
+	if (process.type == Master)
+		master_process(process.shm.config.ptr, process.shm.players.ptr, process.shm.game.ptr);
 	else
-		sub_process(config, game);
+		sub_process(process.shm.config.ptr, process.shm.players.ptr, process.shm.game.ptr);
 
 	// free(players);
-	// free_polygons(areas, areas_len);
 	// shmctl(shm_id, IPC_RMID, NULL);
 	return (EXIT_SUCCESS);
 }

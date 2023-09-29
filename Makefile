@@ -6,7 +6,7 @@
 #    By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/07/17 17:53:52 by lcocozza         ###   ########.fr        #
+#    Updated: 2023/07/31 14:08:58 by lcocozza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ NAME = lemipc
 SRCS =	main.c		\
 		$(_PARSER)	\
 		$(_UTILS)	\
-		$(_MASTER)	\
-		$(_SUB)		\
+		$(_PROCESS)	\
 		$(_BOARD)	\
 
 _PARSER =	parse_config.c
@@ -29,8 +28,11 @@ _BOARD =	divide_board_equal_area.c	\
 			print_board.c				\
 
 _UTILS =	math_utils.c				\
-			string_utils.c				\
-			memory_utils.c
+			string_utils.c
+
+_PROCESS = 	init_process.c				\
+			$(_MASTER)					\
+			$(_SUB)
 
 _MASTER =	master_process.c			\
 			init_teams.c				\
@@ -62,8 +64,11 @@ ifeq ($(DEBUG), on)
 endif
 LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%) -lm -lpthread
 
-vpath %.c	$(addprefix $(SRCS_DIR), /.				\
-				$(addprefix /board, /. /areas) /utils /parser /master_process /sub_process)
+vpath %.c	$(addprefix $(SRCS_DIR), /.									\
+				$(addprefix /board, /. /areas)							\
+				$(addprefix /process, /. /master_process /sub_process)	\
+				/utils /parser /master_process /sub_process				\
+			)
 
 all:
 	$(foreach LIB, ${LIBS}, ${MAKE} -C lib${LIB} ;)

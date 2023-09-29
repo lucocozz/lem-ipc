@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/07/17 17:55:04 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:38:09 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
 # include <sys/stat.h>
 # include <semaphore.h>
 
-# define SHM_KEY 422442
+# define SHM_GAME_KEY 42001
+# define SHM_CONFIG_KEY 42002
+# define SHM_PLAYERS_KEY 42003
 # define SEM_NAME "/lem-ipc"
-# define SHM_SIZE sizeof(t_game)
 # define PERMS 0600
 # define MAX_TEAMS 20
 
@@ -123,43 +124,57 @@ typedef struct s_player {
 }	t_player;
 
 typedef struct s_config {
-	int		players;
-	int		teams;
-	int		board_width;
-	int		board_height;
+	
+	struct {
+		int		teams;
+		int		players;
+		int		total_players;
+	} len;
+	struct {
+		int		width;
+		int		height;
+	} board;
 	bool	all;
 	bool	deamon;
-	t_ptype	process_type;
-	key_t	shm_id;
 } t_config;
 
 typedef struct s_game {
+	t_team			*teams;
+	char			**board;
+	t_game_status	status;
+	t_player		*players;
+	int				players_len;
+}	t_game;
+
+typedef struct s_shm {
 	struct {
-		int		players;
-		int		teams;
+		t_game		*ptr;
+		key_t		id;
+	} game;
+
+	struct {
+		t_config	*ptr;
+		key_t		id;
 	} config;
 
 	struct {
-		t_polygon	*areas;
-		int			areas_len;
-		int			width;
-		int			height;
-		char		**array;
-	} board;
+		t_player	*ptr;
+		key_t		id;
+	} players;
+}	t_shm;
 
-	t_game_status	status;
-	t_player		*players;
-	t_team			*teams;
-	int				players_len;
-}	t_game;
+typedef struct s_process {
+	t_ptype	type;
+	t_shm	shm;
+}	t_process;
 
 /*  BOARD  */
 int 		divide_board_equal_area(t_polygon **areas, int width, int height, int n);
 void		free_polygons(t_polygon *polygons, int len);
 int			area_id_is(t_polygon *areas, int len, t_point point);
 double		halton_sequence(int index, int base);
-t_player	*spread_players(t_game *game);
-void		print_board(t_game *game);
+void		spread_players(t_config *config, t_game *game, t_polygon *areas, int areas_len);
+void		print_board(t_config *config, t_game *game);
 
 
 
@@ -167,20 +182,24 @@ void		print_board(t_game *game);
 bool	isnear(double a, double b, double relative_tolerance, double absolute_tolerance);
 bool	start_with(const char *start_with, const char *str);
 int		rand_range(int min, int max);
-void	*quick_shm_alloc(size_t size, key_t key);
 
 
 /*  PARSER  */
-t_config	parse_config(int argc, char **argv);
+void	parse_config(t_process *process, int argc, char **argv);
+
+
+/* PROCESS */
+t_process	init_process(int argc, char **argv);
+
 
 
 /* MASTER PROCESS */
-int		master_process(t_config config, t_game *game);
+int		master_process(t_config *config, t_player *players, t_game *game);
 t_team	*init_teams(int teams_len);
-void	waiting_players(t_game *game);
+void	waiting_players(t_config *config, t_game *game);
 
 
 /* SUB PROCESS */
-void	sub_process(t_config config, t_game *game);
+void	sub_process(t_config *config, t_player *players, t_game *game);
 
 #endif

@@ -6,42 +6,36 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:40:02 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/17 16:16:50 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:38:25 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
-static int	__init_game(t_config config, t_game *game)
+static void	__init_game(t_config *config, t_player *players, t_game *game)
 {
-	game->config.teams = config.teams;
-	game->config.players = config.teams * config.players;
-	game->board.height = config.board_height;
-	game->board.width = config.board_width;
-	game->board.areas = NULL;
-	game->board.areas_len = 0;
-	game->players = NULL;
-	game->teams = init_teams(config.teams);
-	if (game->teams == NULL)
-		return (-1);
-	return (0);
+	game->players = players;
+	game->players_len = 0;
+	game->teams = init_teams(config->len.teams);
 }
 
-int	master_process(t_config config, t_game *game)
+int	master_process(t_config *config, t_player *players, t_game *game)
 {
-	if (__init_game(config, game) == -1)
-		return (EXIT_ERROR);
+	t_polygon	*areas = NULL;
+	int 		areas_len = 0;
 
-	game->board.areas_len = divide_board_equal_area(
-		&game->board.areas,
-		config.board_width,
-		config.board_height,
-		config.teams
-	);
-	game->players = spread_players(game);
-	if (game->players == NULL)
+	__init_game(config, players, game);
+	if (game->teams == NULL)
 		return (EXIT_ERROR);
+	areas_len = divide_board_equal_area(
+		&areas,
+		config->board.width,
+		config->board.height,
+		config->len.teams
+	);
+	spread_players(config, game, areas, areas_len);
+	free_polygons(areas, areas_len);
 	sem_unlink(SEM_NAME);
-	waiting_players(game);
+	waiting_players(config, game);
 	return (EXIT_SUCCESS);
 }

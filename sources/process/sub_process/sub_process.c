@@ -6,7 +6,7 @@
 /*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 11:26:14 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/17 16:40:11 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/07/31 18:57:38 by lcocozza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static int	__init_player(sem_t *sem, t_game *game)
 	return (game->players_len - 1);
 }
 
-void	sub_process(t_config config, t_game *game)
+void	sub_process(t_config *config, t_player *players, t_game *game)
 {
 	(void)config;
+	game->players = players;
 	sem_t *semaphore = sem_open(SEM_NAME, O_CREAT, PERMS, 1);
 
 	int id = __init_player(semaphore, game);

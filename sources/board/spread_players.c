@@ -12,50 +12,47 @@
 
 #include "lem-ipc.h"
 
-static bool	__check_is_full(t_game *game, int teams[])
+static bool	__check_is_full(t_config *config, int teams[])
 {
-	for (int i = 0; i < game->config.teams; ++i) {
-		if (teams[i] < game->config.players / game->config.teams)
+	for (int i = 0; i < config->len.teams; ++i) {
+		if (teams[i] < config->len.players)
 			return (false);
 	}
 	return (true);
 }
 
-static bool	__add_in_team(t_game *game, t_player *players, t_point point)
+static bool	__add_in_team(t_config *config, t_game *game, t_point point, t_polygon *areas, int areas_len)
 {
 	static int	index = 0;
 	static int	teams[MAX_TEAMS] = {0};
-	int			area_id = area_id_is(game->board.areas, game->board.areas_len, point);
+	int			area_id = area_id_is(areas, areas_len, point);
 
-	if (teams[area_id] < game->config.players / game->config.teams)
+	if (teams[area_id] < config->len.players)
 	{
-		players[index].position = point;
-		players[index].team = game->teams[area_id];
-		players[index].status = Waiting;
+		game->players[index].position = point;
+		game->players[index].team = game->teams[area_id];
+		game->players[index].status = Waiting;
 		
 		teams[area_id]++;
 		index++;
 
-		return (__check_is_full(game, teams));
+		return (__check_is_full(config, teams));
 	}
 	return (false);
 }
 
-t_player	*spread_players(t_game *game)
+void	spread_players(t_config *config, t_game *game, t_polygon *areas, int areas_len)
 {
 	bool		is_full = false;
-	t_player	*players = quick_shm_alloc(sizeof(t_player) * game->config.players, SHM_KEY + 1);
 
 	for (int i = rand_range(0, 100); is_full == false; ++i)
 	{
 		t_point	point;
 
-        point.x = game->board.width * halton_sequence(i, 2);
-        point.y = game->board.height * halton_sequence(i, 3);
+        point.x = config->board.width * halton_sequence(i, 2);
+        point.y = config->board.height * halton_sequence(i, 3);
 
-		if (point.x < game->board.width && point.y < game->board.height)
-			is_full = __add_in_team(game, players, point);
+		if (point.x < config->board.width && point.y < config->board.height)
+			is_full = __add_in_team(config, game, point, areas, areas_len);
     }
-
-	return (players);
 }
