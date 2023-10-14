@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   master_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:40:02 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/08/01 11:38:25 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:17:05 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ static void	__init_game(t_config *config, t_player *players, t_game *game)
 	game->teams = init_teams(config->len.teams);
 }
 
-int	master_process(t_config *config, t_player *players, t_game *game)
+int	master_process(t_process process, t_config *config, t_player *players, t_game *game)
 {
 	t_polygon	*areas = NULL;
 	int 		areas_len = 0;
+	sem_t 		*semaphore = sem_open(SEM_NAME, O_CREAT, PERMS, 1);
 
 	__init_game(config, players, game);
 	if (game->teams == NULL)
@@ -36,6 +37,8 @@ int	master_process(t_config *config, t_player *players, t_game *game)
 	spread_players(config, game, areas, areas_len);
 	free_polygons(areas, areas_len);
 	sem_unlink(SEM_NAME);
-	waiting_players(config, game);
+	waiting_players(process, semaphore, config, game);
+	sem_close(semaphore);
+	sem_unlink(SEM_NAME);
 	return (EXIT_SUCCESS);
 }
