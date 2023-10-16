@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/14 20:28:44 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:56:02 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void		free_polygons(t_polygon *polygons, int len);
 int			area_id_is(t_polygon *areas, int len, t_point point);
 double		halton_sequence(int index, int base);
 void		spread_players(t_config *config, t_game *game, t_polygon *areas, int areas_len);
-void		print_board(t_config *config, t_game *game);
+void		print_board(t_config *config, t_player *players);
 
 
 
@@ -196,7 +196,7 @@ t_process	init_process(int argc, char **argv);
 /* MASTER PROCESS */
 int		master_process(t_process process, t_config *config, t_player *players, t_game *game);
 t_team	*init_teams(int teams_len);
-void	waiting_players(t_process process, sem_t *sem, t_config *config, t_game *game);
+void	waiting_players(sem_t *sem, t_config *config, t_game *game);
 
 
 /* SUB PROCESS */
