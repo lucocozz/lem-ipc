@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/17 16:24:37 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:47:08 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@
 
 # define LEN(x) (sizeof(x) / sizeof(*x))
 
+# define msleep(msec) usleep(msec * 1000)
+
 typedef enum e_player_status {
 	Waiting,
 	Alive,
@@ -92,6 +94,7 @@ typedef enum e_player_status {
 }	t_player_status;
 
 typedef enum e_game_status {
+	Setuping,
 	Running,
 	Finished
 }	t_game_status;
@@ -199,5 +202,7 @@ void	waiting_players(t_config *config, t_game *game, t_player *players);
 
 /* SUB PROCESS */
 void	sub_process(t_config *config, t_player *players, t_game *game);
+void	run_player(t_config *config, t_game *game, t_player *players, int id);
+int		check_death(t_config *config, t_game *game, t_player *players, int id);
 
 #endif

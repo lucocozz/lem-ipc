@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 11:26:14 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/17 16:21:22 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:29:06 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,13 @@ static int	__init_player(sem_t *sem, t_game *game, t_player *players)
 	return (game->players_len - 1);
 }
 
-
-void	run_player() {}
-
-
 void	sub_process(t_config *config, t_player *players, t_game *game)
 {
 	(void)config;
 	sem_t *semaphore = sem_open(SEM_NAME, O_CREAT, PERMS, 1);
 
 	int id = __init_player(semaphore, game, players);
-	(void)id;
+	run_player(config, game, players, id);
 	sem_close(semaphore);
 	sem_unlink(SEM_NAME);
 }

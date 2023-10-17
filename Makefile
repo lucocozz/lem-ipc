@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+         #
+#    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/07/31 14:08:58 by lcocozza         ###   ########.fr        #
+#    Updated: 2023/10/17 17:46:45 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ _MASTER =	master_process.c			\
 			init_teams.c				\
 			waiting_players.c
 
-_SUB =		sub_process.c
+_SUB =		sub_process.c				\
+			run_player.c				\
+			check_death.c
 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)

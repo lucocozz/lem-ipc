@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:40:02 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/17 16:24:44 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:48:27 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	__init_game(t_config *config, t_game *game)
 {
+	game->status = Setuping;
 	game->players_len = 0;
 	game->teams = init_teams(config->len.teams);
 }
