@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/16 17:07:17 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:41:07 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	__clean_process(t_process process)
 		shmctl(process.shm.players.id, IPC_RMID, NULL);
 		shmctl(process.shm.game.id, IPC_RMID, NULL);
 	}
-	exit(EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv)

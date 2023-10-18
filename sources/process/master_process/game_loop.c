@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   waiting_players.c                                  :+:      :+:    :+:   */
+/*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/17 14:59:01 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/18 18:27:36 by lucocozz         ###   ########.fr       */
+/*   Created: 2023/10/18 18:09:47 by lucocozz          #+#    #+#             */
+/*   Updated: 2023/10/18 18:26:29 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
-void	waiting_players(t_config *config, t_game *game, t_player *players)
+void	game_loop(t_config *config, t_game *game, t_player *players)
 {
-	while (game->players_len < config->len.total_players)
-	{
+	game->status = Running;
+	while (game->teams_alive > 1) {
 		system("clear");
-		printf("Waiting for players...\n");
-		printf("Players: %d/%d\n", game->players_len, config->len.total_players);
 		print_board(config, players);
 		msleep(REFRESH_DELAY);
 	}
+	game->status = Finished;
 }

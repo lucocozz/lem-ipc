@@ -12,14 +12,14 @@
 
 #include "lem-ipc.h"
 
-static t_point	*__append_vertex(t_point *vertices, int len, t_point point)
+static t_fpoint	*__append_vertex(t_fpoint *vertices, int len, t_fpoint point)
 {
-	vertices = realloc(vertices, sizeof(t_point) * (len + 1));
+	vertices = realloc(vertices, sizeof(t_fpoint) * (len + 1));
 	vertices[len] = point;
 	return (vertices);
 }
 
-static t_polygon	*__append_polygon(t_polygon *polygons, t_point *vertices,
+static t_polygon	*__append_polygon(t_polygon *polygons, t_fpoint *vertices,
 	int polygon_len, int vertices_len)
 {
 	polygons = realloc(polygons, sizeof(t_polygon) * (polygon_len + 1));
@@ -28,35 +28,35 @@ static t_polygon	*__append_polygon(t_polygon *polygons, t_point *vertices,
 	return (polygons);
 }
 
-static float	__calculate_area(t_point *vertices, int len, int n)
+static float	__calculate_area(t_fpoint *vertices, int len, int n)
 {
 	float	area = 0.0;
 
 	for (int i = 0; i < n; ++i) {
-		t_point	point_a = vertices[i];
-		t_point point_b = vertices[(i + 1) % len];
+		t_fpoint	point_a = vertices[i];
+		t_fpoint point_b = vertices[(i + 1) % len];
 		area += point_a.x * point_b.y - point_a.y * point_b.x;
 	}
 	return (area / 2);
 }
 
-static t_point	*__create_polygon_rectangle(int width, int height)
+static t_fpoint	*__create_polygon_rectangle(int width, int height)
 {
-	t_point	*rectangle = NULL;
+	t_fpoint	*rectangle = NULL;
 
-	rectangle = __append_vertex(rectangle, 0, (t_point){0, 0});
-	rectangle = __append_vertex(rectangle, 1, (t_point){width, 0});
-	rectangle = __append_vertex(rectangle, 2, (t_point){width, height});
-	rectangle = __append_vertex(rectangle, 3, (t_point){0, height});
+	rectangle = __append_vertex(rectangle, 0, (t_fpoint){0, 0});
+	rectangle = __append_vertex(rectangle, 1, (t_fpoint){width, 0});
+	rectangle = __append_vertex(rectangle, 2, (t_fpoint){width, height});
+	rectangle = __append_vertex(rectangle, 3, (t_fpoint){0, height});
 	
 	return (rectangle);
 }
 
-static void	__reduce_area_to(t_point *vertices, int len, float target_area)
+static void	__reduce_area_to(t_fpoint *vertices, int len, float target_area)
 {
-	t_point	center = vertices[0];
-	t_point	previous_vertex = vertices[len - 2];
-	t_point	*current_vertex = &(vertices[len - 1]);
+	t_fpoint	center = vertices[0];
+	t_fpoint	previous_vertex = vertices[len - 2];
+	t_fpoint	*current_vertex = &(vertices[len - 1]);
 
 	float	current_area = 2 * __calculate_area(vertices, len, len - 2);
 	target_area *= 2;
@@ -73,7 +73,7 @@ static void	__reduce_area_to(t_point *vertices, int len, float target_area)
 
 int divide_board_equal_area(t_polygon **areas, int width, int height, int n)
 {
-	t_point 	*rectangle = __create_polygon_rectangle(width, height);
+	t_fpoint 	*rectangle = __create_polygon_rectangle(width, height);
 
 	if (n == 1) {
 		*areas = __append_polygon(*areas, rectangle, 0, 4);
@@ -83,16 +83,16 @@ int divide_board_equal_area(t_polygon **areas, int width, int height, int n)
 	float	total_area = __calculate_area(rectangle, 4, 4);
 	float	target_area_polygon = total_area / n;
 
-	t_point	center_point = {width / 2, height / 2};
-	t_point	first_point = {width / 2, 0};
+	t_fpoint	center_point = {width / 2, height / 2};
+	t_fpoint	first_fpoint = {width / 2, 0};
 
 	int	areas_len;
 	int next_vertex_index = 0;
 	for (areas_len = 0; areas_len < n; ++areas_len)
 	{
 		int		len = 0;
-		t_point	*current_polygon = __append_vertex(NULL, len++, center_point);
-		current_polygon = __append_vertex(current_polygon, len++, first_point);
+		t_fpoint	*current_polygon = __append_vertex(NULL, len++, center_point);
+		current_polygon = __append_vertex(current_polygon, len++, first_fpoint);
 
 		float	current_area_polygon = 0.0;
 		while (current_area_polygon < target_area_polygon)
@@ -107,7 +107,7 @@ int divide_board_equal_area(t_polygon **areas, int width, int height, int n)
 			next_vertex_index = (4 + next_vertex_index - 1) % 4;
 		}
 		*areas = __append_polygon(*areas, current_polygon, areas_len, len);
-		first_point = current_polygon[len - 1];
+		first_fpoint = current_polygon[len - 1];
 	}
 	free(rectangle);
 	return (areas_len);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   area_id_is.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:50:35 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/05/23 14:59:54 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:55:35 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool __is_point_inside_polygon(t_point point, const t_polygon polygon)
 {
 	int				num_vertices = polygon.len;
-	const t_point	*vertices = polygon.vertices;
+	const t_fpoint	*vertices = polygon.vertices;
 
 	int i, j;
 	bool inside = false;

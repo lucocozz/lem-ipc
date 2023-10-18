@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/17 17:46:45 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/18 18:13:07 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,12 @@ _PROCESS = 	init_process.c				\
 
 _MASTER =	master_process.c			\
 			init_teams.c				\
-			waiting_players.c
+			waiting_players.c			\
+			game_loop.c
 
 _SUB =		sub_process.c				\
-			run_player.c				\
-			check_death.c
+			player_loop.c				\
+			death_check.c
 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)

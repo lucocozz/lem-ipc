@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/17 17:47:08 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:23:04 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define SEM_NAME "/lem-ipc"
 # define PERMS 0600
 # define MAX_TEAMS 20
+# define MOVE_DELAY 500
+# define REFRESH_DELAY 50
 
 # define EXIT_ERROR 2
 # define DFT_REL_TOL 1e-9
@@ -84,7 +86,6 @@
 # define DEATH_ICON "💀"
 
 # define LEN(x) (sizeof(x) / sizeof(*x))
-
 # define msleep(msec) usleep(msec * 1000)
 
 typedef enum e_player_status {
@@ -107,16 +108,22 @@ typedef enum e_ptype {
 typedef struct s_team {
 	short	id;
 	char	icon[5];
+	int		players_alive;
 }	t_team;
 
-typedef struct s_point {
+typedef struct s_fpoint {
 	float	x;
 	float	y;
+}	t_fpoint;
+
+typedef struct s_point {
+	int	x;
+	int	y;
 }	t_point;
 
 typedef struct s_polygon {
-	int		len;
-	t_point	*vertices;
+	int			len;
+	t_fpoint	*vertices;
 }	t_polygon;
 
 typedef struct s_player {
@@ -143,6 +150,7 @@ typedef struct s_config {
 
 typedef struct s_game {
 	t_team			*teams;
+	int				teams_alive;
 	char			**board;
 	t_game_status	status;
 	int				players_len;
@@ -196,13 +204,14 @@ t_process	init_process(int argc, char **argv);
 
 /* MASTER PROCESS */
 int		master_process(t_process process, t_config *config, t_player *players, t_game *game);
-t_team	*init_teams(int teams_len);
+t_team	*init_teams(int teams_len, int players_len);
 void	waiting_players(t_config *config, t_game *game, t_player *players);
+void	game_loop(t_config *config, t_game *game, t_player *players);
 
 
 /* SUB PROCESS */
 void	sub_process(t_config *config, t_player *players, t_game *game);
-void	run_player(t_config *config, t_game *game, t_player *players, int id);
-int		check_death(t_config *config, t_game *game, t_player *players, int id);
+void	player_loop(t_config *config, t_game *game, t_player *players, sem_t *sem, int id);
+int		death_check(t_config *config, t_game *game, t_player *players, int id);
 
 #endif
