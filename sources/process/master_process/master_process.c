@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:40:02 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/18 19:26:16 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:59:53 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	master_process(t_config *config, t_game *game, t_team *teams, t_player *play
 {
 	t_polygon	*areas = NULL;
 	int 		areas_len = 0;
-	sem_t 		*semaphore = sem_open(SEM_NAME, O_CREAT, PERMS, 1);
 
 	__init_game(config, game, teams);
 	areas_len = divide_board_equal_area(
@@ -35,9 +34,8 @@ int	master_process(t_config *config, t_game *game, t_team *teams, t_player *play
 	);
 	spread_players(config, teams, players, areas, areas_len);
 	free_polygons(areas, areas_len);
+	sem_unlink(SEM_NAME);
 	waiting_players(config, game, players);
 	game_loop(config, game, players);
-	sem_close(semaphore);
-	sem_unlink(SEM_NAME);
 	return (EXIT_SUCCESS);
 }
