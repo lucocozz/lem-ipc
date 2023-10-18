@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/18 18:23:04 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:25:44 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define SHM_GAME_KEY 42001
 # define SHM_CONFIG_KEY 42002
 # define SHM_PLAYERS_KEY 42003
+# define SHM_TEAMS_KEY 42004
 # define SEM_NAME "/lem-ipc"
 # define PERMS 0600
 # define MAX_TEAMS 20
@@ -149,7 +150,6 @@ typedef struct s_config {
 } t_config;
 
 typedef struct s_game {
-	t_team			*teams;
 	int				teams_alive;
 	char			**board;
 	t_game_status	status;
@@ -171,6 +171,11 @@ typedef struct s_shm {
 		t_player	*ptr;
 		key_t		id;
 	} players;
+
+	struct {
+		t_team		*ptr;
+		key_t		id;
+	} teams;
 }	t_shm;
 
 typedef struct s_process {
@@ -183,7 +188,7 @@ int 		divide_board_equal_area(t_polygon **areas, int width, int height, int n);
 void		free_polygons(t_polygon *polygons, int len);
 int			area_id_is(t_polygon *areas, int len, t_point point);
 double		halton_sequence(int index, int base);
-void		spread_players(t_config *config, t_game *game, t_player *players, t_polygon *areas, int areas_len);
+void		spread_players(t_config *config, t_team *teams, t_player *players, t_polygon *areas, int areas_len);
 void		print_board(t_config *config, t_player *players);
 
 
@@ -203,15 +208,15 @@ t_process	init_process(int argc, char **argv);
 
 
 /* MASTER PROCESS */
-int		master_process(t_process process, t_config *config, t_player *players, t_game *game);
-t_team	*init_teams(int teams_len, int players_len);
+int		master_process(t_config *config, t_game *game, t_team *teams, t_player *players);
+void	init_teams(t_team *teams, int teams_len, int players_len);
 void	waiting_players(t_config *config, t_game *game, t_player *players);
 void	game_loop(t_config *config, t_game *game, t_player *players);
 
 
 /* SUB PROCESS */
-void	sub_process(t_config *config, t_player *players, t_game *game);
-void	player_loop(t_config *config, t_game *game, t_player *players, sem_t *sem, int id);
-int		death_check(t_config *config, t_game *game, t_player *players, int id);
+void	sub_process(t_config *config, t_game *game, t_team *teams, t_player *players);
+void	player_loop(t_config *config, t_game *game, t_team *teams, t_player *players, sem_t *sem, int id);
+int		death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int id);
 
 #endif

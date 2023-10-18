@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:50:01 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/18 18:15:38 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:21:47 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,22 @@ void	__waiting_setup(t_game *game)
 }
 
 int __calculate_distance(t_player player, t_player enemy) {
-    return abs(enemy.position.x - player.position.x) + abs(enemy.position.y - player.position.y);
+	return abs(enemy.position.x - player.position.x) + abs(enemy.position.y - player.position.y);
 }
 
-void __move_to_enemy(t_player *player, t_player enemy)
+void	__move_to_enemy(t_player *player, t_player enemy)
 {
 	int dx = enemy.position.x - player->position.x;
 	int dy = enemy.position.y - player->position.y;
 
-	if (abs(dx) > 1)
-	    dx = (dx > 0) ? 1 : -1;
-	if (abs(dy) > 1)
-	    dy = (dy > 0) ? 1 : -1;
+	if (abs(dx) > abs(dy)) {
+		dx = (dx > 0) ? 1 : -1;
+		dy = 0;
+	}
+	else {
+		dy = (dy > 0) ? 1 : -1;
+		dx = 0;
+	}
 
 	player->position.x += dx;
 	player->position.y += dy;
@@ -58,14 +62,14 @@ t_player	*__find_nearest_enemy(t_config *config, t_player *players, int id)
 	return (&players[nearest_enemy_id]);
 }
 
-void	player_loop(t_config *config, t_game *game, t_player *players, sem_t *sem, int id)
+void	player_loop(t_config *config, t_game *game, t_team *teams, t_player *players, sem_t *sem, int id)
 {
 	__waiting_setup(game);
 	printf("Player %d is running\n", getpid());
 	while (game->status == Running)
 	{
 		sem_wait(sem);
-		if (death_check(config, game, players, id)) {
+		if (death_check(config, game, teams, players, id)) {
 			sem_post(sem);
 			break ;
 		}

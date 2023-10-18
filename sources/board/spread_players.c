@@ -21,27 +21,29 @@ static bool	__check_is_full(t_config *config, int teams[])
 	return (true);
 }
 
-static bool	__add_in_team(t_config *config, t_game *game, t_player *players, t_point point, t_polygon *areas, int areas_len)
+static bool	__add_in_team(t_config *config, t_team *teams, t_player *players,
+	t_point point, t_polygon *areas, int areas_len)
 {
 	static int	index = 0;
-	static int	teams[MAX_TEAMS] = {0};
+	static int	setup_teams[MAX_TEAMS] = {0};
 	int			area_id = area_id_is(areas, areas_len, point);
 
-	if (teams[area_id] < config->len.players)
+	if (setup_teams[area_id] < config->len.players)
 	{
 		players[index].position = point;
-		players[index].team = game->teams[area_id];
+		players[index].team = teams[area_id];
 		players[index].status = Waiting;
 
-		teams[area_id]++;
+		setup_teams[area_id]++;
 		index++;
 
-		return (__check_is_full(config, teams));
+		return (__check_is_full(config, setup_teams));
 	}
 	return (false);
 }
 
-void	spread_players(t_config *config, t_game *game, t_player *players, t_polygon *areas, int areas_len)
+void	spread_players(t_config *config, t_team *teams, t_player *players,
+	t_polygon *areas, int areas_len)
 {
 	bool		is_full = false;
 
@@ -53,6 +55,6 @@ void	spread_players(t_config *config, t_game *game, t_player *players, t_polygon
         point.y = config->board.height * halton_sequence(i, 3);
 
 		if (point.x < config->board.width && point.y < config->board.height)
-			is_full = __add_in_team(config, game, players, point, areas, areas_len);
+			is_full = __add_in_team(config, teams, players, point, areas, areas_len);
     }
 }
