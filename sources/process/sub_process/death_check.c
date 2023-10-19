@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:46:28 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/19 18:00:59 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:45:15 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,22 @@ int	__enemy_neighbors(t_config *config, t_player *players, int id)
 
 int	death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int id)
 {
+	int team_id = players[id].team.id;
 	if (players[id].status == Dead) {
 		players[id].position = (t_point){-1, -1};
 		printf("Player %d is removed\n", getpid());
+		teams[team_id].players_alive--;
+		game->players_len--;
+		if (teams[team_id].players_alive == 0)
+			game->teams_alive--;
 		return (2);
 	}
 
-	int team_id = players[id].team.id;
 	int enemy_neighbors = __enemy_neighbors(config, players, id);
 	if (enemy_neighbors >= 2)
 	{
 		printf("Player %d is dead\n", getpid());
 		players[id].status = Dead;
-		teams[team_id].players_alive--;
-		game->players_len--;
-		if (teams[team_id].players_alive == 0)
-			game->teams_alive--;
 		return (1);
 	}
 	return (0);
