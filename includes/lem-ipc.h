@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/18 19:25:44 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:45:24 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define SEM_NAME "/lem-ipc"
 # define PERMS 0600
 # define MAX_TEAMS 20
-# define MOVE_DELAY 500
+# define MOVE_DELAY 100
 # define REFRESH_DELAY 50
 
 # define EXIT_ERROR 2
@@ -215,8 +215,10 @@ void	game_loop(t_config *config, t_game *game, t_player *players);
 
 
 /* SUB PROCESS */
-void	sub_process(t_config *config, t_game *game, t_team *teams, t_player *players);
-void	player_loop(t_config *config, t_game *game, t_team *teams, t_player *players, sem_t *sem, int id);
-int		death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int id);
+void		sub_process(t_config *config, t_game *game, t_team *teams, t_player *players);
+void		player_loop(t_config *config, t_game *game, t_team *teams, t_player *players, sem_t *sem, int id);
+int			death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int id);
+void		move_to_enemy(t_config *config, t_player *players, t_player *player, t_player enemy);
+t_player	*find_nearest_enemy(t_config *config, t_player *players, int id);
 
 #endif

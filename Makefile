@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/18 18:13:07 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/18 20:45:51 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ _MASTER =	master_process.c			\
 
 _SUB =		sub_process.c				\
 			player_loop.c				\
-			death_check.c
+			death_check.c				\
+			move_to_enemy.c				\
+			find_nearest_enemy.c
 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
