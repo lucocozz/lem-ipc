@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:57:04 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/13 14:44:16 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:32:12 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,8 @@ int	rand_range(int min, int max)
 {
 	srand(time(NULL));
 	return (rand() % (max - min + 1) + min);
+}
+
+int manhattan_distance(t_point pos1, t_point pos2) {
+	return abs(pos2.x - pos1.x) + abs(pos2.y - pos1.y);
 }

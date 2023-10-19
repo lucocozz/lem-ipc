@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/18 20:45:24 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:32:27 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ void		print_board(t_config *config, t_player *players);
 bool	isnear(double a, double b, double relative_tolerance, double absolute_tolerance);
 bool	start_with(const char *start_with, const char *str);
 int		rand_range(int min, int max);
+int		manhattan_distance(t_point pos1, t_point pos2);
 
 
 /*  PARSER  */
