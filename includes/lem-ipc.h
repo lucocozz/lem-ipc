@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 15:42:31 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:27:16 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,18 @@
 "As master:\n"																					\
 "  ./lem-ipc [ --help ] [ --teams=num ] [ --players=num ] [ --height=num ] [ --width=num ]\n"	\
 "\n Options:\n"																					\
-"  --help: display this help\n"																	\
-"  --teams: number of teams\n"																	\
-"  --players: number of players per team\n"														\
-"  --height: height of the board\n"																\
-"  --width: width of the board\n"																\
-"\nAs sub:\n"																					\
+"  --help\tdisplay this help\n"																	\
+"  --teams\tnumber of teams\n"																	\
+"  --players\tnumber of players per team\n"														\
+"  --height\theight of the board\n"																\
+"  --width\twidth of the board\n"																\
+"  --diagonal-kill\tallow diagonal kill\n"														\
+"\n\nAs sub:\n"																					\
 "  ./lem-ipc [ --help ] [ --all ] [ --deamon ]\n"												\
 "\n Options:\n"																					\
-"  --help: display this help\n"																	\
-"  --all: create a deamon process for each player\n"											\
-"  --deamon: start process as deamon\n"
+"  --help\tdisplay this help\n"																	\
+"  --all\t\tcreate a deamon process for each player\n"											\
+"  --deamon\tstart process as deamon\n"
 
 # define DFT_TEAMS 2
 # define DFT_PLAYERS 4
@@ -148,6 +149,7 @@ typedef struct s_config {
 	} board;
 	bool	all;
 	bool	deamon;
+	bool	diagonal_kill;
 } t_config;
 
 typedef struct s_game {

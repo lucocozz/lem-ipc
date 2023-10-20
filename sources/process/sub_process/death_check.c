@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:46:28 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 15:14:57 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:26:34 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ int	__enemy_neighbors(t_config *config, t_player *players, int id)
 	neighbors += __found_enemy_at(config, players, player.team.id, player.position.x + 1, player.position.y);
 	neighbors += __found_enemy_at(config, players, player.team.id, player.position.x, player.position.y - 1);
 	neighbors += __found_enemy_at(config, players, player.team.id, player.position.x, player.position.y + 1);
+	if (config->diagonal_kill == true) {
+		neighbors += __found_enemy_at(config, players, player.team.id, player.position.x + 1, player.position.y + 1);
+		neighbors += __found_enemy_at(config, players, player.team.id, player.position.x - 1, player.position.y - 1);
+		neighbors += __found_enemy_at(config, players, player.team.id, player.position.x - 1, player.position.y + 1);
+		neighbors += __found_enemy_at(config, players, player.team.id, player.position.x + 1, player.position.y - 1);
+	}
+
 	return (neighbors);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_config.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcocozza <lcocozza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:34:14 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/07/31 19:03:31 by lcocozza         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:26:12 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	__init_config(t_config *config)
 	config->board.width = DFT_WIDTH;
 	config->all = false;
 	config->deamon = false;
+	config->diagonal_kill = false;
 }
 
 static void	__parse_master(t_config *config, key_t shm_id, int argc, char **argv)
@@ -45,6 +46,8 @@ static void	__parse_master(t_config *config, key_t shm_id, int argc, char **argv
 			config->board.height = atoi(argv[i] + strlen("--height="));
 		else if (start_with("--width=", argv[i]))
 			config->board.width = atoi(argv[i] + strlen("--width="));
+		else if (start_with("--diagonal-kill", argv[i]))
+			config->diagonal_kill = true;
 		else
 			__parsing_exit(EXIT_ERROR, HELP_USAGE, shm_id);
 	}
