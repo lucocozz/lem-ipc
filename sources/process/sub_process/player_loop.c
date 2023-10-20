@@ -6,14 +6,14 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:50:01 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 15:19:01 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:33:36 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
 
-void	__waiting_setup(t_game *game)
+static void	__waiting_setup(t_game *game)
 {
 	printf("Player %d is waiting for setup\n", getpid());
 	while (game->status == Setuping)

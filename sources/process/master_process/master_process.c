@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:40:02 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/20 15:44:36 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:32:45 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	__init_game(t_config *config, t_game *game, t_team *teams)
 	init_teams(teams, config->len.teams, config->len.players);
 }
 
-char	*__get_title()
+static char	*__get_title()
 {
 	char	*title_path[] = {
 		"titles/tmplr.txt", "titles/crawford2.txt", "titles/fire.txt", "titles/graceful.txt",

@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 16:27:16 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:35:03 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,7 @@ void	parse_config(t_process *process, int argc, char **argv);
 
 /* PROCESS */
 t_process	init_process(int argc, char **argv);
+void		clean_process(t_process process);
 
 
 

@@ -6,13 +6,13 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:46:28 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 16:26:34 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:32:58 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
-int	__found_enemy_at(t_config *config, t_player *players, int team_id, int x, int y)
+static int	__found_enemy_at(t_config *config, t_player *players, int team_id, int x, int y)
 {
 	for (int i = 0; i < config->len.total_players; ++i)
 		if (players[i].position.x == x && players[i].position.y == y && players[i].team.id != team_id && players[i].status == Alive)
@@ -20,7 +20,7 @@ int	__found_enemy_at(t_config *config, t_player *players, int team_id, int x, in
 	return (0);
 }
 
-int	__enemy_neighbors(t_config *config, t_player *players, int id)
+static int	__enemy_neighbors(t_config *config, t_player *players, int id)
 {
 	int			neighbors = 0;
 	t_player	player = players[id];

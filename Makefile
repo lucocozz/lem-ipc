@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/20 15:35:18 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/20 16:35:15 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ _UTILS =	math_utils.c				\
 			signal_utils.c
 
 _PROCESS = 	init_process.c				\
+			clean_process.c				\
 			$(_MASTER)					\
 			$(_SUB)
 

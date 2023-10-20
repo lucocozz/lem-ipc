@@ -6,13 +6,13 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 20:42:50 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 15:20:07 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:33:28 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
 
-int		__can_move(t_config *config, t_player *players, t_point point)
+static int		__can_move(t_config *config, t_player *players, t_point point)
 {
 	if (point.x < 0 || point.y < 0 || point.x >= config->board.width || point.y >= config->board.height)
 		return (false);
@@ -24,7 +24,7 @@ int		__can_move(t_config *config, t_player *players, t_point point)
 	return (true);
 }
 
-int	__move_to(t_player *player, t_point delta)
+static int	__move_to(t_player *player, t_point delta)
 {
 	if (delta.x == 0 && delta.y == 0)
 		return (0);
