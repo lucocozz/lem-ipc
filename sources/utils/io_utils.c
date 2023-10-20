@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 20:58:23 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/19 21:12:46 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 14:50:56 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 char	*read_file(const char *filename)
 {
 	FILE *file = fopen(filename, "r");
-	if (file == NULL) {
-		perror("Error: Failed to open file");
+	if (file == NULL)
 		return (NULL);
-	}
 
 	char *line = NULL;
 	size_t len = 0;
@@ -28,6 +26,8 @@ char	*read_file(const char *filename)
 
 	while ((read = getline(&line, &len, file)) != -1) {
 		result = realloc(result, strlen(result) + read + 1);
+		if (result == NULL)
+			return (NULL);
 		strcat(result, line);
 	}
 

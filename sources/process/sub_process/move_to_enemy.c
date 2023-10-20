@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 20:42:50 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/19 18:33:10 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:20:07 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ int		__can_move(t_config *config, t_player *players, t_point point)
 	return (true);
 }
 
-void	__move_to(t_player *player, t_point delta)
+int	__move_to(t_player *player, t_point delta)
 {
+	if (delta.x == 0 && delta.y == 0)
+		return (0);
 	player->position.x += delta.x;
 	player->position.y += delta.y;
+	return (1);
 }
 
 t_point __explore_best_direction(t_config *config, t_player *players,
@@ -59,7 +62,7 @@ t_point __explore_best_direction(t_config *config, t_player *players,
 	return (best_direction);
 }
 
-void	move_to_enemy(t_config *config, t_player *players, t_player *player, t_player enemy)
+int	move_to_enemy(t_config *config, t_player *players, t_player *player, t_player enemy)
 {
 	t_point delta = {
 		.x = enemy.position.x - player->position.x,
@@ -76,9 +79,10 @@ void	move_to_enemy(t_config *config, t_player *players, t_player *player, t_play
 	}
 
 	if (__can_move(config, players, (t_point){player->position.x + delta.x, player->position.y + delta.y}))
-		__move_to(player, delta);
+		return (__move_to(player, delta));
 	else if (manhattan_distance(player->position, enemy.position) > 1) {
 		t_point best_direction = __explore_best_direction(config, players, player, enemy, delta);
-		__move_to(player, best_direction);
+		return (__move_to(player, best_direction));
 	}
+	return (0);
 }

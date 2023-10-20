@@ -6,11 +6,13 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/18 19:12:36 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:36:08 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-ipc.h"
+
+int g_sig = 0;
 
 void	__clean_process(t_process process)
 {

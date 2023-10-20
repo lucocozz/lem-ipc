@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/19 21:01:41 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:42:31 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <semaphore.h>
+# include <signal.h>
 
 # define SHM_GAME_KEY 42001
 # define SHM_CONFIG_KEY 42002
@@ -183,6 +184,8 @@ typedef struct s_process {
 	t_shm	shm;
 }	t_process;
 
+extern int g_sig;
+
 /*  BOARD  */
 int 		divide_board_equal_area(t_polygon **areas, int width, int height, int n);
 void		free_polygons(t_polygon *polygons, int len);
@@ -198,6 +201,7 @@ bool	start_with(const char *start_with, const char *str);
 int		rand_range(int min, int max);
 int		manhattan_distance(t_point pos1, t_point pos2);
 char	*read_file(const char *filename);
+void	sig_handler(int sig);
 
 
 /*  PARSER  */
@@ -212,15 +216,15 @@ t_process	init_process(int argc, char **argv);
 /* MASTER PROCESS */
 int		master_process(t_config *config, t_game *game, t_team *teams, t_player *players);
 void	init_teams(t_team *teams, int teams_len, int players_len);
-void	waiting_players(t_config *config, t_game *game, t_player *players);
-void	game_loop(t_config *config, t_game *game, t_player *players);
+void	waiting_players(t_config *config, t_game *game, t_player *players, char *title);
+void	game_loop(t_config *config, t_game *game, t_player *players, char *title);
 
 
 /* SUB PROCESS */
 void		sub_process(t_config *config, t_game *game, t_team *teams, t_player *players);
 void		player_loop(t_config *config, t_game *game, t_team *teams, t_player *players, sem_t *sem, int id);
 int			death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int id);
-void		move_to_enemy(t_config *config, t_player *players, t_player *player, t_player enemy);
+int			move_to_enemy(t_config *config, t_player *players, t_player *player, t_player enemy);
 t_player	*find_nearest_enemy(t_config *config, t_player *players, int id);
 
 #endif

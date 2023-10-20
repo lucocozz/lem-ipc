@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:46:28 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/19 18:45:15 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:14:57 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	death_check(t_config *config, t_game *game, t_team *teams, t_player *players
 {
 	int team_id = players[id].team.id;
 	if (players[id].status == Dead) {
+		msleep(MOVE_DELAY);
 		players[id].position = (t_point){-1, -1};
 		printf("Player %d is removed\n", getpid());
 		teams[team_id].players_alive--;
@@ -50,6 +51,7 @@ int	death_check(t_config *config, t_game *game, t_team *teams, t_player *players
 	{
 		printf("Player %d is dead\n", getpid());
 		players[id].status = Dead;
+		msleep(MOVE_DELAY);
 		return (1);
 	}
 	return (0);

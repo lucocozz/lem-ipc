@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/19 21:02:04 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/20 15:35:18 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ _BOARD =	divide_board_equal_area.c	\
 
 _UTILS =	math_utils.c				\
 			string_utils.c				\
-			io_utils.c
+			io_utils.c					\
+			signal_utils.c
 
 _PROCESS = 	init_process.c				\
 			$(_MASTER)					\
