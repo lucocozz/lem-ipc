@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 16:35:03 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:14:00 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 "  --height\theight of the board\n"																\
 "  --width\twidth of the board\n"																\
 "  --diagonal-kill\tallow diagonal kill\n"														\
+"  --one-move\tallow one move per turn\n"														\
 "\n\nAs sub:\n"																					\
 "  ./lem-ipc [ --help ] [ --all ] [ --deamon ]\n"												\
 "\n Options:\n"																					\
@@ -150,6 +151,7 @@ typedef struct s_config {
 	bool	all;
 	bool	deamon;
 	bool	diagonal_kill;
+	bool	one_move;
 } t_config;
 
 typedef struct s_game {

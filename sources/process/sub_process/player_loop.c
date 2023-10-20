@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:50:01 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 16:33:36 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:14:24 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	player_loop(t_config *config, t_game *game, t_team *teams, t_player *player
 
 		msleep(MOVE_DELAY);
 		sem_post(sem);
-		msleep(1);
+		if (config->one_move == true)
+			msleep(1);
 	}
 }

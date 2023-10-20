@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:34:14 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/20 16:26:12 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:13:43 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	__init_config(t_config *config)
 	config->all = false;
 	config->deamon = false;
 	config->diagonal_kill = false;
+	config->one_move = false;
 }
 
 static void	__parse_master(t_config *config, key_t shm_id, int argc, char **argv)
@@ -48,6 +49,8 @@ static void	__parse_master(t_config *config, key_t shm_id, int argc, char **argv
 			config->board.width = atoi(argv[i] + strlen("--width="));
 		else if (start_with("--diagonal-kill", argv[i]))
 			config->diagonal_kill = true;
+		else if (start_with("--one-move", argv[i]))
+			config->one_move = true;
 		else
 			__parsing_exit(EXIT_ERROR, HELP_USAGE, shm_id);
 	}
