@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:09:47 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 15:41:29 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:21:11 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	game_loop(t_config *config, t_game *game, t_player *players, char *title)
 	{
 		system("clear");
 		if (title != NULL)
-			printf("%s\n", title);
+			printf("%s%s%s\n", TEXT_BOLD, title, TEXT_RESET);
 		print_board(config, players);
 		msleep(REFRESH_DELAY);
 	}

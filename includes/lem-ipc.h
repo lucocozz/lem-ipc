@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 17:14:00 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 19:20:08 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@
 # define BORDER_TOP_RIGHT "╮"
 # define BORDER_BOTTOM_LEFT "╰"
 # define BORDER_BOTTOM_RIGHT "╯"
+
+# define TEXT_BOLD "\e[1m"
+# define TEXT_RESET "\e[0m"
 
 # define EMOJIS (char *[]){	\
 	"😀", "😁", "😆", "😅", "😂", "🤣", "🥲", "😸", "😊", "😇", "🙂", "🙃", \

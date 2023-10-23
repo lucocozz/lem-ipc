@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 20:42:50 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 16:33:28 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:30:55 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_point __explore_best_direction(t_config *config, t_player *players,
 	t_player *player, t_player enemy, t_point prev_delta)
 {
 	int min_distance = -1;
-	t_point directions[] = {
+	t_point const directions[] = {
 		{1, 0}, {0, 1}, {-1, 0}, {0, -1},
 	};
 	int direction_len = LEN(directions);

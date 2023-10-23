@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:50:01 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 17:14:24 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:03:54 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	player_loop(t_config *config, t_game *game, t_team *teams, t_player *player
 	while (game->status == Running)
 	{
 		sem_wait(sem);
-		
+
 		is_dead = death_check(config, game, teams, players, id);
 		if (is_dead == 1) {
 			sem_post(sem);
@@ -39,9 +39,6 @@ void	player_loop(t_config *config, t_game *game, t_team *teams, t_player *player
 			break ;
 		}
 
-		//? calculer la distance de chaque ennemi puis l'envoyer dans mqueue
-		//? si mqueue est vide, se déplacer vers l'ennemi le plus proche
-		//? sinon, se déplacer vers l'ennemi le plus proche d'un autre joueur
 		t_player *enemy = find_nearest_enemy(config, players, id);
 		if (move_to_enemy(config, players, &players[id], *enemy) == 0) {
 			sem_post(sem);
@@ -52,5 +49,6 @@ void	player_loop(t_config *config, t_game *game, t_team *teams, t_player *player
 		sem_post(sem);
 		if (config->one_move == true)
 			msleep(1);
+		else usleep(50);
 	}
 }
