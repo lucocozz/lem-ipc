@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 11:26:52 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/23 19:33:52 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:49:06 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_process	init_process(int argc, char **argv)
 {
 	t_process process;
 
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	parse_config(&process, argc, argv);
 	process.shm.players.id = shmget(SHM_PLAYERS_KEY, sizeof(t_player) *
 		process.shm.config.ptr->len.total_players, IPC_CREAT | SHM_PERMS);

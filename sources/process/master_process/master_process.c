@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 10:40:02 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/20 16:32:45 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:48:42 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	master_process(t_config *config, t_game *game, t_team *teams, t_player *play
 	int 		areas_len = 0;
 	char		*title = __get_title();
 
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
 	__init_game(config, game, teams);
 	areas_len = divide_board_equal_area(
 		&areas,

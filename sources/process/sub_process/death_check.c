@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:46:28 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/25 15:32:34 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:54:57 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ static int	__enemy_neighbors(t_config *config, t_player *players, int uid)
 int	death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int uid)
 {
 	int team_id = players[uid].team.id;
+
+	if (players[uid].status == Alive && g_sig != 0) {
+		printf("Player %d was killed by God\n", uid);
+		players[uid].status = Dead;
+		msleep(MOVE_DELAY);
+		return (1);
+	}
 
 	if (players[uid].status == Dead) {
 		msleep(MOVE_DELAY);
