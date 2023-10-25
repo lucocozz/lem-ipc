@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/25 18:42:24 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:01:02 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,5 +257,7 @@ int			death_check(t_config *config, t_game *game, t_team *teams, t_player *playe
 int			move_to_enemy(t_config *config, t_player *players, t_player *player, t_player enemy);
 t_player	*find_nearest_enemy(t_config *config, t_player *players, int uid);
 t_player	*find_nearest_ally_to_enemy(t_config *config, t_player *players, int uid, t_player enemy);
+t_player	*get_enemy(t_config *config, t_player *players, int uid, t_player **locked_enemy, int channel_id);
+void		request_assist(int channel_id, t_player ally, t_player enemy);
 
 #endif

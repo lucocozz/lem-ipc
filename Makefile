@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/23 17:31:13 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/25 19:01:23 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,8 @@ _SUB =		sub_process.c					\
 			move_to_enemy.c					\
 			find_nearest_enemy.c			\
 			find_nearest_ally_to_enemy.c	\
+			get_enemy.c						\
+			request_assist.c				\
 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
