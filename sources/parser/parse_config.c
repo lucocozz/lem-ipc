@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:34:14 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/20 19:17:48 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:33:52 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	__parse_sub(t_config *config, int argc, char **argv)
 void	parse_config(t_process *process, int argc, char **argv)
 {
 	errno = 0;
-	process->shm.config.id = shmget(SHM_CONFIG_KEY, sizeof(t_config), IPC_CREAT | IPC_EXCL | PERMS);
+	process->shm.config.id = shmget(SHM_CONFIG_KEY, sizeof(t_config), IPC_CREAT | IPC_EXCL | SHM_PERMS);
 	if (errno == 0) {
 		process->type = Master;
 		process->shm.config.ptr = shmat(process->shm.config.id, NULL, 0);

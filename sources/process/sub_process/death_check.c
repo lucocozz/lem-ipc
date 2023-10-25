@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 17:46:28 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 16:32:58 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:32:34 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static int	__found_enemy_at(t_config *config, t_player *players, int team_id, in
 	return (0);
 }
 
-static int	__enemy_neighbors(t_config *config, t_player *players, int id)
+static int	__enemy_neighbors(t_config *config, t_player *players, int uid)
 {
 	int			neighbors = 0;
-	t_player	player = players[id];
+	t_player	player = players[uid];
 
 	neighbors += __found_enemy_at(config, players, player.team.id, player.position.x - 1, player.position.y);
 	neighbors += __found_enemy_at(config, players, player.team.id, player.position.x + 1, player.position.y);
@@ -39,13 +39,14 @@ static int	__enemy_neighbors(t_config *config, t_player *players, int id)
 	return (neighbors);
 }
 
-int	death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int id)
+int	death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int uid)
 {
-	int team_id = players[id].team.id;
-	if (players[id].status == Dead) {
+	int team_id = players[uid].team.id;
+
+	if (players[uid].status == Dead) {
 		msleep(MOVE_DELAY);
-		players[id].position = (t_point){-1, -1};
-		printf("Player %d is removed\n", getpid());
+		players[uid].position = (t_point){-1, -1};
+		printf("Player %d is removed\n", uid);
 		teams[team_id].players_alive--;
 		game->players_len--;
 		if (teams[team_id].players_alive == 0)
@@ -53,11 +54,11 @@ int	death_check(t_config *config, t_game *game, t_team *teams, t_player *players
 		return (2);
 	}
 
-	int enemy_neighbors = __enemy_neighbors(config, players, id);
+	int enemy_neighbors = __enemy_neighbors(config, players, uid);
 	if (enemy_neighbors >= 2)
 	{
-		printf("Player %d is dead\n", getpid());
-		players[id].status = Dead;
+		printf("Player %d is dead\n", uid);
+		players[uid].status = Dead;
 		msleep(MOVE_DELAY);
 		return (1);
 	}

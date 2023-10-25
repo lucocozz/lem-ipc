@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 16:34:45 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:31:02 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int	main(int argc, char **argv)
 			process.shm.players.ptr
 		);
 	}
-	clean_process(process);
+	clean_process(process, *process.shm.config.ptr);
 	return (EXIT_SUCCESS);
 }

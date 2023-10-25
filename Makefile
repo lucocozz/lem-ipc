@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/20 16:35:15 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/23 17:31:13 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,33 +20,34 @@ SRCS =	main.c		\
 
 _PARSER =	parse_config.c
 
-_BOARD =	divide_board_equal_area.c	\
-			free_polygons.c				\
-			area_id_is.c				\
-			halton_sequence.c			\
-			spread_players.c			\
-			print_board.c				\
+_BOARD =	divide_board_equal_area.c		\
+			free_polygons.c					\
+			area_id_is.c					\
+			halton_sequence.c				\
+			spread_players.c				\
+			print_board.c					\
 
-_UTILS =	math_utils.c				\
-			string_utils.c				\
-			io_utils.c					\
+_UTILS =	math_utils.c					\
+			string_utils.c					\
+			io_utils.c						\
 			signal_utils.c
 
-_PROCESS = 	init_process.c				\
-			clean_process.c				\
-			$(_MASTER)					\
+_PROCESS = 	init_process.c					\
+			clean_process.c					\
+			$(_MASTER)						\
 			$(_SUB)
 
-_MASTER =	master_process.c			\
-			init_teams.c				\
-			waiting_players.c			\
+_MASTER =	master_process.c				\
+			init_teams.c					\
+			waiting_players.c				\
 			game_loop.c
 
-_SUB =		sub_process.c				\
-			player_loop.c				\
-			death_check.c				\
-			move_to_enemy.c				\
-			find_nearest_enemy.c
+_SUB =		sub_process.c					\
+			player_loop.c					\
+			death_check.c					\
+			move_to_enemy.c					\
+			find_nearest_enemy.c			\
+			find_nearest_ally_to_enemy.c	\
 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)

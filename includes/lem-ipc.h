@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/20 19:20:08 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/25 18:42:24 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/ipc.h>
 # include <sys/shm.h>
 # include <sys/sem.h>
+# include <sys/msg.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/stat.h>
@@ -35,10 +36,13 @@
 # define SHM_PLAYERS_KEY 42003
 # define SHM_TEAMS_KEY 42004
 # define SEM_NAME "/lem-ipc"
-# define PERMS 0600
+# define MSGQ_BASE_KEY 42100
+# define SHM_PERMS 0600
+# define MSG_PERMS 0666
 # define MAX_TEAMS 20
 # define MOVE_DELAY 100
 # define REFRESH_DELAY 50
+# define MAX_TURN_STUCK 3
 
 # define EXIT_ERROR 2
 # define DFT_REL_TOL 1e-9
@@ -77,6 +81,9 @@
 
 # define TEXT_BOLD "\e[1m"
 # define TEXT_RESET "\e[0m"
+# define TEXT_RED "\e[31m"
+# define TEXT_GREEN "\e[32m"
+# define TEXT_ORANGE "\e[33m"
 
 # define EMOJIS (char *[]){	\
 	"😀", "😁", "😆", "😅", "😂", "🤣", "🥲", "😸", "😊", "😇", "🙂", "🙃", \
@@ -112,6 +119,15 @@ typedef enum e_ptype {
 	Sub
 } t_ptype;
 
+typedef enum e_msgtype {
+	Assist = 1
+}	t_msgtype;
+
+typedef enum e_msg_assist_field {
+	Ally = 0,
+	Enemy = 1
+}	t_msg_assist_field;
+
 typedef struct s_team {
 	short	id;
 	char	icon[5];
@@ -138,6 +154,7 @@ typedef struct s_player {
 	t_team			team;
 	t_player_status	status;
 	pid_t			pid;
+	uid_t			uid;
 }	t_player;
 
 typedef struct s_config {
@@ -186,6 +203,11 @@ typedef struct s_shm {
 	} teams;
 }	t_shm;
 
+typedef struct s_msgbuff {
+	long	type;
+	int8_t	data[32];
+}	t_msgbuff;
+
 typedef struct s_process {
 	t_ptype	type;
 	t_shm	shm;
@@ -217,7 +239,7 @@ void	parse_config(t_process *process, int argc, char **argv);
 
 /* PROCESS */
 t_process	init_process(int argc, char **argv);
-void		clean_process(t_process process);
+void		clean_process(t_process process, t_config config);
 
 
 
@@ -230,9 +252,10 @@ void	game_loop(t_config *config, t_game *game, t_player *players, char *title);
 
 /* SUB PROCESS */
 void		sub_process(t_config *config, t_game *game, t_team *teams, t_player *players);
-void		player_loop(t_config *config, t_game *game, t_team *teams, t_player *players, sem_t *sem, int id);
-int			death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int id);
+void		player_loop(t_config *config, t_game *game, t_team *teams, t_player *players, sem_t *sem, int uid);
+int			death_check(t_config *config, t_game *game, t_team *teams, t_player *players, int uid);
 int			move_to_enemy(t_config *config, t_player *players, t_player *player, t_player enemy);
-t_player	*find_nearest_enemy(t_config *config, t_player *players, int id);
+t_player	*find_nearest_enemy(t_config *config, t_player *players, int uid);
+t_player	*find_nearest_ally_to_enemy(t_config *config, t_player *players, int uid, t_player enemy);
 
 #endif
