@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/26 14:33:11 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:02:53 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@
 "As master:\n"																					\
 "  ./lem-ipc [ --help ] [ --teams=num ] [ --players=num ] [ --height=num ] [ --width=num ]\n"	\
 "\n Options:\n"																					\
-"  --help\tdisplay this help\n"																	\
-"  --teams\tnumber of teams\n"																	\
-"  --players\tnumber of players per team\n"														\
-"  --height\theight of the board\n"																\
-"  --width\twidth of the board\n"																\
+"  --help\t\tdisplay this help\n"																\
+"  --teams\t\tnumber of teams\n"																\
+"  --players\t\tnumber of players per team\n"													\
+"  --height\t\theight of the board\n"															\
+"  --width\t\twidth of the board\n"																\
 "  --diagonal-kill\tallow diagonal kill\n"														\
-"  --one-move\tallow one move per turn\n"														\
+"  --one-move\t\tallow one move per turn\n"														\
 "\n\nAs sub:\n"																					\
 "  ./lem-ipc [ --help ] [ --all ] [ --deamon ]\n"												\
 "\n Options:\n"																					\

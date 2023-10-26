@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:04:34 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/26 15:44:17 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:49:08 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void __deamon(t_process process)
 		perror("fork");
 		clean_process(process, *process.shm.config.ptr);
 		exit(EXIT_FAILURE);
-	} else if (pid > 0)
+	} else if (pid > 0) {
+		clean_process(process, *process.shm.config.ptr);
 		exit(EXIT_SUCCESS);
-	else {
+	} else {
 		printf("Run as deamon\n");
 		setsid();
 		umask(0);
