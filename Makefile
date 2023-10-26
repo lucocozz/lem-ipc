@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/26 14:56:32 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/26 15:00:54 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,9 @@ _PLAYER_MANAGEMENT =	death_check.c					\
 						find_nearest_ally_to_enemy.c	\
 						get_enemy.c						\
 						request_assist.c				\
+
+
+
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 DEPENDENCIES = $(OBJS:%.o=%.d)
