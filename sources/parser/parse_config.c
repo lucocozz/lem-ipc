@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 17:34:14 by lcocozza          #+#    #+#             */
-/*   Updated: 2023/10/23 19:33:52 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:33:31 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ static void	__parse_sub(t_config *config, int argc, char **argv)
 	{
 		if (start_with("--help", argv[i]))
 			__parsing_exit(EXIT_SUCCESS, HELP_USAGE, 0);
-		else if (start_with("--all", argv[i]))
-			config->all = true;
 		else if (start_with("--deamon", argv[i]))
 			config->deamon = true;
 		else

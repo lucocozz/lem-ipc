@@ -6,7 +6,7 @@
 #    By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 15:23:20 by lucocozz          #+#    #+#              #
-#    Updated: 2023/10/25 19:01:23 by lucocozz         ###   ########.fr        #
+#    Updated: 2023/10/26 14:56:32 by lucocozz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,13 +44,14 @@ _MASTER =	master_process.c				\
 
 _SUB =		sub_process.c					\
 			player_loop.c					\
-			death_check.c					\
-			move_to_enemy.c					\
-			find_nearest_enemy.c			\
-			find_nearest_ally_to_enemy.c	\
-			get_enemy.c						\
-			request_assist.c				\
+			$(_PLAYER_MANAGEMENT)			\
 
+_PLAYER_MANAGEMENT =	death_check.c					\
+						move_to_enemy.c					\
+						find_nearest_enemy.c			\
+						find_nearest_ally_to_enemy.c	\
+						get_enemy.c						\
+						request_assist.c				\
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 DEPENDENCIES = $(OBJS:%.o=%.d)
@@ -77,8 +78,10 @@ LDFLAGS = $(LIBS:%=-L lib%) $(LIBS:%=-l%) -lm -lpthread
 
 vpath %.c	$(addprefix $(SRCS_DIR), /.									\
 				$(addprefix /board, /. /areas)							\
-				$(addprefix /process, /. /master_process /sub_process)	\
-				/utils /parser /master_process /sub_process				\
+				$(addprefix /process, /. /master_process				\
+					$(addprefix /sub_process, /. /player_management)	\
+				)														\
+				/utils /parser											\
 			)
 
 all:

@@ -6,7 +6,7 @@
 /*   By: lucocozz <lucocozz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 16:03:35 by lucocozz          #+#    #+#             */
-/*   Updated: 2023/10/25 19:01:02 by lucocozz         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:33:11 by lucocozz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@
 "  ./lem-ipc [ --help ] [ --all ] [ --deamon ]\n"												\
 "\n Options:\n"																					\
 "  --help\tdisplay this help\n"																	\
-"  --all\t\tcreate a deamon process for each player\n"											\
 "  --deamon\tstart process as deamon\n"
 
 # define DFT_TEAMS 2
